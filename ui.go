@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"fyne.io/fyne/v2/app"
@@ -26,16 +27,8 @@ func main() {
 	win.SetContent(content)
 	win.ShowAndRun()
 
-}
-
-func PerformGetRequest() {
-	const osutrackrank = "https://osutrack-api.ameo.dev/stats_history?user={0}&mode=0"
-
-	response, err := http.Get(osutrackrank)
+	stats, err := a.GetStats(*username)
 	if err != nil {
 		panic(err)
-	}
-
-	defer response.Body.Close()
 
 }
