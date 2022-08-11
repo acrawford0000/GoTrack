@@ -2,19 +2,19 @@ package main
 
 // Stats data is exported, it models the data we receive.
 type datapoints struct {
-	count300      string
-	count100      string
-	count50       string
-	playcount     string
-	ranked_score  string
-	total_score   string
-	pp_rank       string
-	level         string
-	pp_raw        string
-	accuracy      string
-	count_rank_ss string
-	count_rank_s  string
-	count_rank_a  string
+	count300      int
+	count100      int
+	count50       int
+	playcount     int
+	ranked_score  int
+	total_score   int
+	pp_rank       int
+	level         int
+	pp_raw        float64
+	accuracy      float64
+	count_rank_ss int
+	count_rank_s  int
+	count_rank_a  int
 	timestamp     string
 }
 
