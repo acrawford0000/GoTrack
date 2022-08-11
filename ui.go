@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
@@ -36,11 +38,14 @@ func main() {
 	// Create container for everything
 	pad := container.NewPadded(content)
 
+	//const str string = "2264338"
+
+	stats, err := GetStats(userid)
+	if err != nil {
+		log.Fatal("ooopsss an error occurred, please try again")
+	}
+
 	w.SetContent(pad)
 	w.ShowAndRun()
 
-	//stats, err := GetStats(str)
-	//if err != nil {
-	//	log.Fatal("ooopsss an error occurred, please try again")
-	//}
 }

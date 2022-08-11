@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"io"
 	"log"
 	"net/http"
 )
@@ -14,16 +15,22 @@ func GetStats(userid string) {
 	// We make HTTP request using the Get function
 	resp, err := http.Get(URL)
 	if err != nil {
-		log.Fatal("ooopsss an error occurred, please try again")
+		log.Fatal("an error occurred, please try again")
 	}
 	defer resp.Body.Close()
 
-	//Create a variable of the same type as our model
+	//Create a variable of the same type as the model, and create decoder
 	var cResp datapoints
 
 	// Decode the data
-	if err := json.NewDecoder(resp.Body).Decode(&cResp); err != nil {
-		log.Fatal("ooopsss! an error occurred, please try again")
+	for {
+		if err := json.NewDecoder(resp.Body).Decode(&cResp); err != nil {
+			if err == io.EOF {
+				break
+			}
+			log.Fatal("an error occurred, please try again")
+		}
+
 	}
 
 }
