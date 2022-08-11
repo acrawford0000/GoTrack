@@ -11,27 +11,36 @@ func main() {
 
 	// Create gui window
 	a := app.New()
-	win := a.NewWindow("GoTrack")
+	w := a.NewWindow("GoTrack")
 
-	win.SetContent(widget.NewLabel("Hello!"))
+	welcome := widget.NewLabel("Welcome to GoTrack! Make charts for everything osu!")
 
 	// Create userid variable
 	userid := binding.NewString()
+	//var userid string
+	//boundstring := binding.NewString()
+	//str, err := userid.Get()
 
 	// Take input from user
 	input := widget.NewEntryWithData(userid)
 	input.SetPlaceHolder("Enter a userid")
 
-	content := container.NewVBox(input, widget.NewButton("Save", func() {
+	// Create widget list to display ids
+	widgetList := widget.NewLabelWithData(userid)
 
-	}))
+	//Create containers to use in layout
+	content := container.NewVBox(welcome, input, widget.NewButton("Save", func() {
 
-	win.SetContent(content)
-	win.ShowAndRun()
+	}), widgetList)
 
-	//stats, err := GetStats(userid)
+	// Create container for everything
+	pad := container.NewPadded(content)
+
+	w.SetContent(pad)
+	w.ShowAndRun()
+
+	//stats, err := GetStats(str)
 	//if err != nil {
-	//	panic(err)
-
+	//	log.Fatal("ooopsss an error occurred, please try again")
 	//}
 }
