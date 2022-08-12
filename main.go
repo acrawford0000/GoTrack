@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"log"
+	"project/api"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/logger"
@@ -43,6 +44,7 @@ func main() {
 		OnShutdown:        app.shutdown,
 		Bind: []interface{}{
 			app,
+			api.GetStats,
 		},
 		// Windows platform specific options
 		Windows: &windows.Options{
