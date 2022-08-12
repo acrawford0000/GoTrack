@@ -20,11 +20,11 @@ func GetStats(userid string) {
 	defer resp.Body.Close()
 
 	//Create a variable of the same type as the model, and create decoder
-	var cResp datapoints
+	var CResp datapoints
 
 	// Decode the data
 	for {
-		if err := json.NewDecoder(resp.Body).Decode(&cResp); err != nil {
+		if err := json.NewDecoder(resp.Body).Decode(&CResp); err != nil {
 			if err == io.EOF {
 				break
 			}
