@@ -1,7 +1,7 @@
 package api
 
 // Stats data is exported, it models the data we receive.
-type datapoints struct {
+type datapoints []struct {
 	count300      int
 	count100      int
 	count50       int
