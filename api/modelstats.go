@@ -1,4 +1,4 @@
-package main
+package api
 
 // Stats data is exported, it models the data we receive.
 type datapoints struct {

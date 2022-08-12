@@ -1,8 +1,12 @@
 package main
 
+import (
+	"project/fyne"
+)
+
 func main() {
 
-	MainFyne()
+	fyne.MainFyne()
 
 	// Call fn GetStats
 	//stats, err := GetStats(userid)
