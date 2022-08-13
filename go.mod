@@ -6,6 +6,8 @@ require github.com/wailsapp/wails/v2 v2.0.0-beta.43
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect
+	github.com/go-echarts/go-echarts v1.0.0 // indirect
+	github.com/go-echarts/go-echarts/v2 v2.2.4 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/google/uuid v1.1.2 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect

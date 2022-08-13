@@ -1,12 +1,12 @@
 # README
 
 ## About
+This program will take osu! userid and create a graph with whatever stats you would like to be displayed. Add as many userids as you like.
 
 This is Wails 2.0 + ReactJS Template
 Tested on Windows and MacOS
 
-To create a project using this template run:
-`wails init -n [Your Appname] -t https://github.com/AlienRecall/wails-react-template`
+Graphing done with go-echarts
 
 ## Building 
 
