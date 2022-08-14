@@ -53,7 +53,7 @@ func GetStats([]string) {
 
 }
 
-// This is to parse the date to Y/M/D
+// This is to parse the date to Y/M/D WHEN I GET TO THE GRAPH TOOLTIPS
 //date, err := time.Parse("2015-04-21T01:23:21.000Z", timestamp)
 //if err != nil {
 //	panic(err)

@@ -17,10 +17,3 @@ type datapoints struct {
 	CountRankA  int     `json:"count_rank_a"`
 	Timestamp   string  `json:"timestamp"`
 }
-
-// This is to parse the date to Y/M/D
-//date, err := time.Parse("2015-04-21T01:23:21.000Z", timestamp)
-//if err != nil {
-//	panic(err)
-//	}
-// 	date.Format("2006-01-02")
