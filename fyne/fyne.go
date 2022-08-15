@@ -45,7 +45,15 @@ func MainFyne() {
 		api.Ids = append(api.Ids, input.Text)
 		list.Refresh()
 	})
-
+	/*
+		// Create a remove button (went between button and result)
+		remove := widget.NewButton("Remove", func() {
+			// when the button is clicked set the result label
+			result.SetText("User removed from list!")
+			api.Ids = append(api.Ids[:list.Selected()], api.Ids[list.Selected()+1:]...)
+			list.Refresh()
+		})
+	*/
 	// Create a label to display file has been created
 	created := widget.NewLabel("")
 

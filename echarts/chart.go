@@ -4,6 +4,7 @@ import (
 	"math/rand"
 	"os"
 
+	"github.com/go-echarts/go-echarts/charts"
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
 	"github.com/go-echarts/go-echarts/v2/types"
@@ -24,16 +25,24 @@ func CreateGraph() {
 		charts.WithTitleOpts(opts.Title{
 			Title: "Line-示例图",
 		}),
+		charts.WithToolTipOpts(opts.ToolTip{
+			Trigger: "axis",
+		}),
+		charts.WithToolBoxOpts(opts.Tool{
+			Show: "True",
+		}),
+		charts.WithDataZoomOpts(opts.Zoom{
+			Type: "inside",
+			Type: "slider",
+		}),
+		charts.YAxisOpts(opts.YAxisOptions{
+			Type: "value",
+		})
 	)
 
-	// Example data source
-	// 商家A := []int{5, 20, 36, 10, 10, 100}
-	// 商家B := []int{55, 60, 16, 20, 15, 80}
-	cities := []string{"衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"}
-
-	line.SetXAxis(cities).
-		AddSeries("Category A", generateLineItems()).
-		AddSeries("Category B", generateLineItems())
+	line.SetXAxis("2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022").
+		AddSeries("Zalaria", generateLineItems()).
+		AddSeries("Category B")
 
 	f, _ := os.Create("line.html")
 	line.Render(f)
@@ -48,20 +57,6 @@ func generateLineItems() []opts.LineData {
 	return items
 }
 
-/*
-func generateLineItems() []opts.LineData {
-	items := make([]opts.LineData, 0)
-	for i := 0; i < itemCntLine; i++ {
-		items = append(items, opts.LineData{Value: rand.Intn(300)})
-	}
-	return items
-}
-
-func generateLineData(data []float32) []opts.LineData {
-	items := make([]opts.LineData, 0)
-	for i := 0; i < len(data); i++ {
-		items = append(items, opts.LineData{Value: data[i]})
-	}
-	return items
-}
+/* TODO
+Make a function so that when api.GetStats marshalls the json, I can make the chart access whichever field I want it to, and add that as the series value
 */

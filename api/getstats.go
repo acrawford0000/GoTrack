@@ -41,10 +41,14 @@ func GetStats([]string) {
 			}
 
 		}
+
+		// Turn the slice into json
 		jsonData, err := json.MarshalIndent(History, "", " ")
 		if err != nil {
 			panic(err)
 		}
+
+		// Write the json to a file
 		err = ioutil.WriteFile("stats"+strconv.Itoa(num)+".json", jsonData, 0644)
 		if err != nil {
 			panic(err)
@@ -53,9 +57,17 @@ func GetStats([]string) {
 
 }
 
+/* For loop to append the CountRankSS field of the History slice into ChartData ### SHOULD REPLACE WRITE THE JSON TO A FILE
+// I think I need to make n.CountRankSS a dynamic variable that can be set from Fyne GUI
+for _, n := range History {
+	ChartData = append(ChartData, n.CountRankSS)
+}
+
+
 // This is to parse the date to Y/M/D WHEN I GET TO THE GRAPH TOOLTIPS
 //date, err := time.Parse("2015-04-21T01:23:21.000Z", timestamp)
 //if err != nil {
 //	panic(err)
 //	}
 // 	date.Format("2006-01-02")
+*/
