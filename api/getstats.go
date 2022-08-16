@@ -3,23 +3,21 @@ package api
 import (
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
-	"strconv"
 )
 
 // Declare the slice where player ids will be stored, as well as the filters to send to the chart
-var Ids []string
-var Fields []string
-var c chan []datapoints 	// Think I may need this to get the parsed data to chart.go... Dont know yet
-var History []datapoints	// or this
+var Ids []string         // This is userid from the fyne GUI
+var Fields []string      // This will be selections from a menu in Fyne (whenever I get to make it)
+var c chan []datapoints  // Think I may need this to get the parsed data to chart.go... Dont know yet
+var History []datapoints // or this
 
 // Get stats is exported ...
 func GetStats([]string) {
 
-	// For loop to run the stats for however many ids are in the slice
-	for num, userid := range Ids {
+	// For loop to get the stats for all ids in the slice/list
+	for _, userid := range Ids {
 
 		// Build The URL string
 		URL := "https://osutrack-api.ameo.dev/stats_history?user=" + userid + "&mode=0"
@@ -31,9 +29,6 @@ func GetStats([]string) {
 		}
 		defer resp.Body.Close()
 
-		// Make var for json data to go into
-		var History []datapoints
-
 		// Decode the data
 		for {
 			if err := json.NewDecoder(resp.Body).Decode(&History); err != nil {
@@ -44,10 +39,7 @@ func GetStats([]string) {
 			}
 
 		}
-		// Put the decoded data into a channel named "c"		
-		c := make(chan[]datapoints, len(History))
-		c <- History
-
+		/*	 		This was to make sure that the json was correctly decoded
 		// Turn the slice into json
 		jsonData, err := json.MarshalIndent(History, "", " ")
 		if err != nil {
@@ -59,49 +51,53 @@ func GetStats([]string) {
 		if err != nil {
 			panic(err)
 		}
-
+		*/
 	}
 
 }
 
-// Filter function that filters a selection of fields from "History" and sends them through a channel.
-func Filter(<- c, Fields []string) {
+func Filter() {
+
+	// This is to store the filtered slice before sending it to the channel
+	var FilteredSlice []datapoints
+
+	// Loop through the slice of fields selected and filter the data
 	for _, field := range Fields {
-		// Loop through the fields we want to filter.
-		for _, dp := range Data {
-			// Loop through the data we have in our struct.
+
+		// Loop through the slice of data and filter the fields
+		for _, data := range History {
 			switch field {
-			case "Count300":
-				c <- datapoints{Count300: dp.Count300}
-			case "Count100":
-				c <- datapoints{Count100: dp.Count100}
-			case "Count50":
-				c <- datapoints{Count50: dp.Count50}
+			case "300s":
+				FilteredSlice = append(FilteredSlice, datapoints(data.Count300))
+			case "100s":
+				FilteredSlice = append(FilteredSlice, datapoints(data.Count100))
+			case "50s":
+				FilteredSlice = append(FilteredSlice, datapoints(data.Count50))
 			case "Playcount":
-				c <- datapoints{Playcount: dp.Playcount}
-			case "RankedScore":
-				c <- datapoints{RankedScore: dp.RankedScore}
-			case "TotalScore":
-				c <- datapoints{TotalScore: dp.TotalScore}
-			case "PpRank":
-				c <- datapoints{PpRank: dp.PpRank}
+				FilteredSlice = append(FilteredSlice, datapoints(data.Playcount))
+			case "Ranked Score":
+				FilteredSlice = append(FilteredSlice, datapoints(data.RankedScore))
+			case "Total Score":
+				FilteredSlice = append(FilteredSlice, datapoints(data.TotalScore))
+			case "PP Ranking":
+				FilteredSlice = append(FilteredSlice, datapoints(data.PpRank))
 			case "Level":
-				c <- datapoints{Level: dp.Level}
-			case "PpRaw":
-				c <- datapoints{PpRaw: dp.PpRaw}
+				FilteredSlice = append(FilteredSlice, datapoints(data.Level))
+			case "PP Raw":
+				FilteredSlice = append(FilteredSlice, datapoints(data.PpRaw))
 			case "Accuracy":
-				c <- datapoints{Accuracy: dp.Accuracy}
-			case "CountRankSS":
-				c <- datapoints{CountRankSS: dp.CountRankSS}
-			case "CountRankS":
-				c <- datapoints{CountRankS: dp.CountRankS}
-			case "CountRankA":
-				c <- datapoints{CountRankA: dp.CountRankA}
-			case "Timestamp":
-				c <- datapoints{Timestamp: dp.Timestamp}
+				FilteredSlice = append(FilteredSlice, datapoints(data.Accuracy))
+			case "SS Ranks":
+				FilteredSlice = append(FilteredSlice, datapoints(data.CountRankSS))
+			case "S Ranks":
+				FilteredSlice = append(FilteredSlice, datapoints(data.CountRankS))
+			case "A Ranks":
+				FilteredSlice = append(FilteredSlice, datapoints(data.CountRankA))
 			}
 		}
 	}
+
+	c <- FilteredSlice
 }
 
 /*
