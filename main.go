@@ -1,12 +1,12 @@
 package main
 
 import (
-	"project/echarts"
+	//"project/echarts"
 	"project/fyne"
 )
 
 func main() {
 
 	fyne.MainFyne()
-	echarts.CreateGraph()
+	//echarts.CreateGraph()
 }
