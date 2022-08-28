@@ -41,6 +41,7 @@ func CreateGraph() {
 	)
 
 	line.SetXAxis("2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022").
+	// I need a function that will add a series for each player and as well as the stats selected from fyne gui
 		AddSeries("Zalaria", generateLineItems()).
 		AddSeries("Category B")
 

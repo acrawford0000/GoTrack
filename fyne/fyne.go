@@ -40,10 +40,14 @@ func MainFyne() {
 			return len(api.Ids)
 		},
 		func() fyne.CanvasObject {
-			return widget.NewLabel("user profile ids")
+			return container.NewPadded(
+				widget.NewLabel("user profile ids"),
+				//widget.NewButtonWithIcon("", theme.DeleteIcon(), nil),
+			)
 		},
 		func(i widget.ListItemID, o fyne.CanvasObject) {
-			o.(*widget.Label).SetText(api.Ids[i])
+			//o.(*widget.Label).SetText(api.Ids[i])
+			o.(*fyne.Container).Objects[0].(*widget.Label).SetText(api.Ids[i])
 		})
 
 	// Take input from user
@@ -60,15 +64,7 @@ func MainFyne() {
 		api.Ids = append(api.Ids, input.Text)
 		list.Refresh()
 	})
-	/*
-		// Create a remove button (went between button and result)
-		remove := widget.NewButton("Remove", func() {
-			// when the button is clicked set the result label
-			result.SetText("User removed from list!")
-			api.Ids = append(api.Ids[:list.Selected()], api.Ids[list.Selected()+1:]...)
-			list.Refresh()
-		})
-	*/
+
 	// Create a label to display file has been created
 	created := widget.NewLabel("")
 
@@ -78,15 +74,24 @@ func MainFyne() {
 		api.GetStats(api.Ids)
 	})
 
+	// Create a delete button
+
 	//Create containers to use in layout
 	welcomelabel := container.NewCenter(welcome)
 	content := container.NewVBox(input, button, result, createFile, created)
+	filter := container.NewPadded(makeCheckGroup(&api.FilterList{}))
 
-	// Create container for everything
-	border := container.New(layout.NewBorderLayout(welcomelabel, nil, list, nil),
+	// Create layout for containers
+	maintab := container.New(layout.NewBorderLayout(welcomelabel, nil, list, nil),
 		welcomelabel, list, content)
 
-	w.SetContent(border)
+	// Create tabs for the program and filter list
+	tabs := container.NewAppTabs(
+		container.NewTabItem("Main Program", maintab),
+		container.NewTabItem("Graph filters", filter),
+	)
+
+	w.SetContent(tabs)
 	w.ShowAndRun()
 
 }
@@ -163,3 +168,64 @@ func makeTray(a fyne.App) {
 		desk.SetSystemTrayMenu(menu)
 	}
 }
+
+// Create a checkgroup that is connected to FilterList
+func makeCheckGroup(filter *api.FilterList) *widget.CheckGroup {
+	checkGroup := widget.NewCheckGroup(
+		[]string{"300", "100", "50", "Playcount", "Ranked Score", "Total Score", "Pp Rank", "Level", "Pp Raw", "Accuracy", "Count Rank SS", "Count Rank S", "Count Rank A", "Timestamp"},
+		func(s []string) {
+			filter.Count300 = false
+			filter.Count100 = false
+			filter.Count50 = false
+			filter.Playcount = false
+			filter.RankedScore = false
+			filter.TotalScore = false
+			filter.PpRank = false
+			filter.Level = false
+			filter.PpRaw = false
+			filter.Accuracy = false
+			filter.CountRankSS = false
+			filter.CountRankS = false
+			filter.CountRankA = false
+			filter.Timestamp = false
+			for _, v := range s {
+				switch v {
+				case "300":
+					filter.Count300 = true
+				case "100":
+					filter.Count100 = true
+				case "50":
+					filter.Count50 = true
+				case "Playcount":
+					filter.Playcount = true
+				case "Ranked Score":
+					filter.RankedScore = true
+				case "Total Score":
+					filter.TotalScore = true
+				case "Pp Rank":
+					filter.PpRank = true
+				case "Level":
+					filter.Level = true
+				case "Pp Raw":
+					filter.PpRaw = true
+				case "Accuracy":
+					filter.Accuracy = true
+				case "Count Rank SS":
+					filter.CountRankSS = true
+				case "Count Rank S":
+					filter.CountRankS = true
+				case "Count Rank A":
+					filter.CountRankA = true
+				case "Timestamp":
+					filter.Timestamp = true
+				}
+			}
+		})
+	return checkGroup
+}
+
+/* Create a checkgroup to filter the data for the chart
+func Filters() {
+
+
+} */

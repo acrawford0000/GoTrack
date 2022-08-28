@@ -1,6 +1,6 @@
 package api
 
-// Stats data is exported, it models the data we receive.
+// Model of the api response
 type datapoints struct {
 	Count300    int     `json:"count300"`
 	Count100    int     `json:"count100"`
@@ -16,4 +16,22 @@ type datapoints struct {
 	CountRankS  int     `json:"count_rank_s"`
 	CountRankA  int     `json:"count_rank_a"`
 	Timestamp   string  `json:"timestamp"`
+}
+
+// Fields to toggle the data that should be displayed in chart.go
+type FilterList struct {
+	Count300    bool
+	Count100    bool
+	Count50     bool
+	Playcount   bool
+	RankedScore bool
+	TotalScore  bool
+	PpRank      bool
+	Level       bool
+	PpRaw       bool
+	Accuracy    bool
+	CountRankSS bool
+	CountRankS  bool
+	CountRankA  bool
+	Timestamp   bool
 }

@@ -8,15 +8,14 @@ import (
 )
 
 // Declare the slice where player ids will be stored, as well as the filters to send to the chart
-var Ids []string         // This is userid from the fyne GUI
-var Fields []string      // This will be selections from a menu in Fyne (whenever I get to make it)
-var c chan []datapoints  // Think I may need this to get the parsed data to chart.go... Dont know yet
-var History []datapoints // or this
+var Ids []string  // This is the saved inputs from the fyne GUI
+var Fields []bool // This will be selections from a menu in Fyne (whenever I make it)
+var History []datapoints
 
 // Get stats is exported ...
 func GetStats([]string) {
 
-	// For loop to get the stats for all ids in the slice/list
+	// For loop to get the stats for all ids in the slice/list    * I think I may need to move this loop to run after each the data is sent to the chart
 	for _, userid := range Ids {
 
 		// Build The URL string
@@ -39,6 +38,7 @@ func GetStats([]string) {
 			}
 
 		}
+
 		/*	 		This was to make sure that the json was correctly decoded
 		// Turn the slice into json
 		jsonData, err := json.MarshalIndent(History, "", " ")
@@ -53,51 +53,6 @@ func GetStats([]string) {
 		}
 		*/
 	}
-
-}
-
-func Filter() {
-
-	// This is to store the filtered slice before sending it to the channel
-	var FilteredSlice []datapoints
-
-	// Loop through the slice of fields selected and filter the data
-	for _, field := range Fields {
-
-		// Loop through the slice of data and filter the fields
-		for _, data := range History {
-			switch field {
-			case "300s":
-				FilteredSlice = append(FilteredSlice, datapoints(data.Count300))
-			case "100s":
-				FilteredSlice = append(FilteredSlice, datapoints(data.Count100))
-			case "50s":
-				FilteredSlice = append(FilteredSlice, datapoints(data.Count50))
-			case "Playcount":
-				FilteredSlice = append(FilteredSlice, datapoints(data.Playcount))
-			case "Ranked Score":
-				FilteredSlice = append(FilteredSlice, datapoints(data.RankedScore))
-			case "Total Score":
-				FilteredSlice = append(FilteredSlice, datapoints(data.TotalScore))
-			case "PP Ranking":
-				FilteredSlice = append(FilteredSlice, datapoints(data.PpRank))
-			case "Level":
-				FilteredSlice = append(FilteredSlice, datapoints(data.Level))
-			case "PP Raw":
-				FilteredSlice = append(FilteredSlice, datapoints(data.PpRaw))
-			case "Accuracy":
-				FilteredSlice = append(FilteredSlice, datapoints(data.Accuracy))
-			case "SS Ranks":
-				FilteredSlice = append(FilteredSlice, datapoints(data.CountRankSS))
-			case "S Ranks":
-				FilteredSlice = append(FilteredSlice, datapoints(data.CountRankS))
-			case "A Ranks":
-				FilteredSlice = append(FilteredSlice, datapoints(data.CountRankA))
-			}
-		}
-	}
-
-	c <- FilteredSlice
 }
 
 /*
