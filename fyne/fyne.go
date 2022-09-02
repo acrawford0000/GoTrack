@@ -74,7 +74,7 @@ func MainFyne() {
 		api.GetStats(api.Ids)
 	})
 
-	// Create a delete button
+	// Create a delete button to remove entries from the list
 
 	//Create containers to use in layout
 	welcomelabel := container.NewCenter(welcome)

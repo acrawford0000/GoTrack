@@ -1,18 +1,23 @@
 package echarts
 
 import (
-	"math/rand"
 	"os"
+	"project/api"
 
-	"github.com/go-echarts/go-echarts/charts"
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
 	"github.com/go-echarts/go-echarts/v2/types"
 )
 
-var (
-	itemCntLine = 6
-)
+var itemCntLine = len(api.History.CountRankSS)
+
+func generateLineItems() []opts.LineData {
+	items := make([]opts.LineData, 0)
+	for i := 0; i < itemCntLine; i++ {
+		items = append(items, opts.LineData{Value: api.History.CountRankSS})
+	}
+	return items
+}
 
 func CreateGraph() {
 	// Create a new line instance
@@ -25,37 +30,27 @@ func CreateGraph() {
 		charts.WithTitleOpts(opts.Title{
 			Title: "Line-示例图",
 		}),
-		charts.WithToolTipOpts(opts.ToolTip{
+		charts.WithToolboxOpts(opts.Toolbox{
+			Show: true,
+		}),
+		charts.WithTooltipOpts(opts.Tooltip{
 			Trigger: "axis",
 		}),
-		charts.WithToolBoxOpts(opts.Tool{
-			Show: "True",
-		}),
-		charts.WithDataZoomOpts(opts.Zoom{
+		charts.WithDataZoomOpts(opts.DataZoom{
 			Type: "inside",
-			Type: "slider",
 		}),
-		charts.YAxisOpts(opts.YAxisOptions{
+		charts.WithYAxisOpts(opts.YAxis{
 			Type: "value",
-		})
+		}),
 	)
 
-	line.SetXAxis("2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022").
-	// I need a function that will add a series for each player and as well as the stats selected from fyne gui
-		AddSeries("Zalaria", generateLineItems()).
-		AddSeries("Category B")
+	line.SetXAxis(api.History.Timestamp).
+		// I need a function that will add a series for each player and as well as the stats selected from fyne gui
+		AddSeries("SS Count", generateLineItems())
 
 	f, _ := os.Create("line.html")
 	line.Render(f)
 
-}
-
-func generateLineItems() []opts.LineData {
-	items := make([]opts.LineData, 0)
-	for i := 0; i < itemCntLine; i++ {
-		items = append(items, opts.LineData{Value: rand.Intn(300)})
-	}
-	return items
 }
 
 /* TODO

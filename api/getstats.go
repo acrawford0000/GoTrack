@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -10,7 +11,7 @@ import (
 // Declare the slice where player ids will be stored, as well as the filters to send to the chart
 var Ids []string  // This is the saved inputs from the fyne GUI
 var Fields []bool // This will be selections from a menu in Fyne (whenever I make it)
-var History []datapoints
+var History datapoints
 
 // Get stats is exported ...
 func GetStats([]string) {
@@ -38,22 +39,28 @@ func GetStats([]string) {
 			}
 
 		}
-
-		/*	 		This was to make sure that the json was correctly decoded
-		// Turn the slice into json
-		jsonData, err := json.MarshalIndent(History, "", " ")
+		// Output the decoded data to a file
+		output, err := json.MarshalIndent(&History, "", " ")
 		if err != nil {
-			panic(err)
+			log.Fatal("an error occurred, please try again")
 		}
-
-		// Write the json to a file
-		err = ioutil.WriteFile("stats"+strconv.Itoa(num)+".json", jsonData, 0644)
-		if err != nil {
-			panic(err)
-		}
-		*/
+		ioutil.WriteFile("data.json", output, 0644)
 	}
 }
+
+/*	 		This was to make sure that the json was correctly decoded
+// Turn the slice into json
+jsonData, err := json.MarshalIndent(History, "", " ")
+if err != nil {
+	panic(err)
+}
+
+// Write the json to a file
+err = ioutil.WriteFile("stats"+strconv.Itoa(num)+".json", jsonData, 0644)
+if err != nil {
+	panic(err)
+}
+*/
 
 /*
  This is to parse the date to Y/M/D WHEN I GET TO THE GRAPH TOOLTIPS
