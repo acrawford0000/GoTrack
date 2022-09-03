@@ -48,20 +48,6 @@ func GetStats([]string) {
 	}
 }
 
-/*	 		This was to make sure that the json was correctly decoded
-// Turn the slice into json
-jsonData, err := json.MarshalIndent(History, "", " ")
-if err != nil {
-	panic(err)
-}
-
-// Write the json to a file
-err = ioutil.WriteFile("stats"+strconv.Itoa(num)+".json", jsonData, 0644)
-if err != nil {
-	panic(err)
-}
-*/
-
 /*
  This is to parse the date to Y/M/D WHEN I GET TO THE GRAPH TOOLTIPS
 date, err := time.Parse("2015-04-21T01:23:21.000Z", timestamp)

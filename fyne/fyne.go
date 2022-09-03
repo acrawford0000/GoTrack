@@ -169,7 +169,7 @@ func makeTray(a fyne.App) {
 	}
 }
 
-// Create a checkgroup that is connected to FilterList
+// Create a checkgroup
 func makeCheckGroup(filter *api.FilterList) *widget.CheckGroup {
 	checkGroup := widget.NewCheckGroup(
 		[]string{"300", "100", "50", "Playcount", "Ranked Score", "Total Score", "Pp Rank", "Level", "Pp Raw", "Accuracy", "Count Rank SS", "Count Rank S", "Count Rank A", "Timestamp"},

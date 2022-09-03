@@ -9,12 +9,12 @@ import (
 	"github.com/go-echarts/go-echarts/v2/types"
 )
 
-var itemCntLine = len(api.History.CountRankSS)
+var itemCntLine = len(api.History)
 
 func generateLineItems() []opts.LineData {
-	items := make([]opts.LineData, 0)
-	for i := 0; i < itemCntLine; i++ {
-		items = append(items, opts.LineData{Value: api.History.CountRankSS})
+	items := make([]opts.LineData, itemCntLine)
+	for _, userid := range api.History {
+		items = append(items, opts.LineData{Value: api.History})
 	}
 	return items
 }
