@@ -11,7 +11,7 @@ import (
 // Declare the slice where player ids will be stored, as well as the filters to send to the chart
 var Ids []string  // This is the saved inputs from the fyne GUI
 var Fields []bool // This will be selections from a menu in Fyne (whenever I make it)
-var History datapoints
+var History []datapoints
 
 // Get stats is exported ...
 func GetStats([]string) {

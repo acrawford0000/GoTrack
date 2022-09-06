@@ -13,7 +13,7 @@ var itemCntLine = len(api.History)
 
 func generateLineItems() []opts.LineData {
 	items := make([]opts.LineData, itemCntLine)
-	for _, userid := range api.History {
+	for _, x := range api.History {
 		items = append(items, opts.LineData{Value: api.History})
 	}
 	return items
@@ -42,11 +42,18 @@ func CreateGraph() {
 		charts.WithYAxisOpts(opts.YAxis{
 			Type: "value",
 		}),
+		charts.WithXAxisOpts(opts.XAxis{
+			Type: "time",
+		}),
 	)
 
 	line.SetXAxis(api.History.Timestamp).
 		// I need a function that will add a series for each player and as well as the stats selected from fyne gui
-		AddSeries("SS Count", generateLineItems())
+		for Name, x := range api.FilterList {
+			if x = true
+				AddSeries(Name, generateLineItems())
+				break
+		}
 
 	f, _ := os.Create("line.html")
 	line.Render(f)
