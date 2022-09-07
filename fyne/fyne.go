@@ -169,10 +169,10 @@ func makeTray(a fyne.App) {
 	}
 }
 
-// Create a checkgroup
+// Create a checkgroup to filter the data that goes to the chart *Timestamp is permanently enabled
 func makeCheckGroup(filter *api.FilterList) *widget.CheckGroup {
 	checkGroup := widget.NewCheckGroup(
-		[]string{"300", "100", "50", "Playcount", "Ranked Score", "Total Score", "Pp Rank", "Level", "Pp Raw", "Accuracy", "Count Rank SS", "Count Rank S", "Count Rank A", "Timestamp"},
+		[]string{"300", "100", "50", "Playcount", "Ranked Score", "Total Score", "Pp Rank", "Level", "Pp Raw", "Accuracy", "Count Rank SS", "Count Rank S", "Count Rank A"},
 		func(s []string) {
 			filter.Count300 = false
 			filter.Count100 = false
@@ -187,7 +187,7 @@ func makeCheckGroup(filter *api.FilterList) *widget.CheckGroup {
 			filter.CountRankSS = false
 			filter.CountRankS = false
 			filter.CountRankA = false
-			filter.Timestamp = false
+			filter.Timestamp = true
 			for _, v := range s {
 				switch v {
 				case "300":
@@ -216,16 +216,8 @@ func makeCheckGroup(filter *api.FilterList) *widget.CheckGroup {
 					filter.CountRankS = true
 				case "Count Rank A":
 					filter.CountRankA = true
-				case "Timestamp":
-					filter.Timestamp = true
 				}
 			}
 		})
 	return checkGroup
 }
-
-/* Create a checkgroup to filter the data for the chart
-func Filters() {
-
-
-} */

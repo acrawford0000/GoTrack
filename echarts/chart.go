@@ -11,7 +11,7 @@ import (
 
 var itemCntLine = len(api.History)
 
-func generateLineItems() []opts.LineData {
+func generateLineItems() []opts.LineData {	// I think I need to pass the name from filter list here to get the specified field response
 	items := make([]opts.LineData, itemCntLine)
 	for _, x := range api.History {
 		items = append(items, opts.LineData{Value: api.History})
@@ -51,7 +51,8 @@ func CreateGraph() {
 		// I need a function that will add a series for each player and as well as the stats selected from fyne gui
 		for Name, x := range api.FilterList {
 			if x = true
-				AddSeries(Name, generateLineItems())
+				AddSeries(Name, generateLineItems())			
+				
 				break
 		}
 

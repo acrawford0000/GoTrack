@@ -9,8 +9,7 @@ import (
 )
 
 // Declare the slice where player ids will be stored, as well as the filters to send to the chart
-var Ids []string  // This is the saved inputs from the fyne GUI
-var Fields []bool // This will be selections from a menu in Fyne (whenever I make it)
+var Ids []string // This is the saved inputs from the fyne GUI
 var History []datapoints
 
 // Get stats is exported ...
@@ -39,7 +38,7 @@ func GetStats([]string) {
 			}
 
 		}
-		// Output the decoded data to a file
+		// Output the decoded data to a file to make sure it works (it does)
 		output, err := json.MarshalIndent(&History, "", " ")
 		if err != nil {
 			log.Fatal("an error occurred, please try again")
@@ -47,12 +46,3 @@ func GetStats([]string) {
 		ioutil.WriteFile("data.json", output, 0644)
 	}
 }
-
-/*
- This is to parse the date to Y/M/D WHEN I GET TO THE GRAPH TOOLTIPS
-date, err := time.Parse("2015-04-21T01:23:21.000Z", timestamp)
-if err != nil {
-	panic(err)
-	}
- 	date.Format("2006-01-02")
-*/
